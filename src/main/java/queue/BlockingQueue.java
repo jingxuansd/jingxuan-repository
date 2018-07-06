@@ -17,12 +17,15 @@ public class BlockingQueue<T> {
         if (t == null) return;
         synchronized (this) {
             if (index == capacity) {
+                System.out.println("队列已满，放等待。。。");
                 wait();
             }
             arr[index++] = t;
-            if (index == 0) {
+            if (index == 1) {
+                System.out.println("队列已不为空，唤醒取。。。");
                 notifyAll();
             }
+//            System.out.println("添加一个：" + t);
         }
     }
 
@@ -30,14 +33,21 @@ public class BlockingQueue<T> {
         T choose;
         synchronized (this) {
             if (index == 0) {
+                System.out.println("队列为空，取等待。。。");
                 wait();
             }
             choose = arr[--index];
             arr[index] = null; //删除
-            if (index == capacity) {
+            if (index == capacity-1) {
+                System.out.println("队列未满，唤醒放。。。");
                 notifyAll();
             }
+//            System.out.println("取出一个：" + choose);
         }
         return choose;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

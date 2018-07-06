@@ -1,3 +1,5 @@
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
 import queue.BlockingQueue;
 
 /**
@@ -21,7 +23,7 @@ public class LearnMain {
         Thread b = new Thread() {
             @Override
             public void run() {
-                for( int j = 0 ; j < 100 ; j++ )
+                for( int j = 0 ; j < 90 ; j++ )
                     try {
                         queue.take();
                     } catch (InterruptedException e) {
@@ -32,6 +34,6 @@ public class LearnMain {
         b.start();
         a.join();
         b.join();
-        System.out.println();
+        System.out.println(queue.getIndex());
     }
 }
